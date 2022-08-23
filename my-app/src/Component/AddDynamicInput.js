@@ -1,61 +1,65 @@
 import React,{useState} from 'react'
 
-function AddDynamicInput() {
+const AddDynamicInput = () => {
 
-   
-  const [name,setName]=useState({
-    "fname":"",
-    "lname":""
+
+  const [inrormation ,setInformation]=useState({
+     
+     name:"",
+     email:"",
+     password:"",
   })
- 
 
-const inputEvent =(e)=>{
+  const inputHandler =(e)=>{
+    const name= e.target.name
+    const value= e.target.value
 
-  const value=e.target.value;
-  const name= e.target.name;
-
-   setName((preValue)=>{
-    if(name==="fname"){
-      return{
-        fname:value,
-        lname:preValue.lname
+    setInformation((val)=>{
+      if(name==="name"){
+        return {
+          name:value,
+          email:val.email,
+          password:val.password
+        }
       }
-    }
-    else if(name==="lname"){
-      return{
-        fname:preValue.fname,
-        lname:value
+      else if(name==="email"){
+        return{
+          name:val.name,
+          email:value,
+          password:val.password
+        }
       }
-    }
-  })
-}
-  
-const onSubmit=(e)=>{
-  e.preventDefault();
 
-  console.log(name.fname)
-  alert("Form submit")
-}
+      else if(name==="password"){
+        return{
+          name:val.name,
+          email:val.email,
+          password:value,
+        }
+      }
+    })
+
+  }
 
 
+  const subMitHandler=(e)=>{
+    e.preventDefault()
+    console.log(inrormation)
 
+  }
 
   return (
     <div>
     
-    <h1>Enter Your Details </h1>
+    <form onSubmit={subMitHandler}>
+    
+    <input type="text" value={inrormation.name} onChange={inputHandler} name="name" /> <br />
+    <input type="email" value={inrormation.email} onChange={inputHandler} name="email" /><br />
+    <input type="password" value={inrormation.password} onChange={inputHandler} name="password" /><br />
 
-    <form onSubmit={onSubmit}>  
-    <input type="text" value={name.fname} name="fname" onChange={inputEvent} /> <br />
-    <input type="text" value={name.lname} name="lname" onChange={inputEvent} /> <br />
-
-
-    <button >Submit</button>
+    <button>Submit</button>
 
     </form>
-
-     <br />
-   
     
     
     </div>
