@@ -3,18 +3,39 @@ import React,{useState} from 'react'
 function AddDynamicInput() {
 
    
-   const [name,setName] =useState("")
-      const [name2,setName2] =useState("")
+  const [name,setName]=useState({
+    "fname":"",
+    "lname":""
+  })
+ 
 
+const inputEvent =(e)=>{
 
-   const inputEvent=(e)=>{
-    setName(e.target.value)
-   }
-   
+  const value=e.target.value;
+  const name= e.target.name;
 
-   const clickHandele =()=>{
-    setName2(name)
-   }
+   setName((preValue)=>{
+    if(name==="fname"){
+      return{
+        fname:value,
+        lname:preValue.lname
+      }
+    }
+    else if(name==="lname"){
+      return{
+        fname:preValue.fname,
+        lname:value
+      }
+    }
+  })
+}
+  
+const onSubmit=(e)=>{
+  e.preventDefault();
+
+  console.log(name.fname)
+  alert("Form submit")
+}
 
 
 
@@ -22,12 +43,19 @@ function AddDynamicInput() {
   return (
     <div>
     
+    <h1>Enter Your Details </h1>
 
-    <h2>Hello {name} </h2>
+    <form onSubmit={onSubmit}>  
+    <input type="text" value={name.fname} name="fname" onChange={inputEvent} /> <br />
+    <input type="text" value={name.lname} name="lname" onChange={inputEvent} /> <br />
 
-    <input type="text" placeholder="enter your name" value={name} onChange={inputEvent}  /> <br />
-    <button onClick={clickHandele}> Submit</button>
-    <p>{name2}</p>
+
+    <button >Submit</button>
+
+    </form>
+
+     <br />
+   
     
     
     </div>
